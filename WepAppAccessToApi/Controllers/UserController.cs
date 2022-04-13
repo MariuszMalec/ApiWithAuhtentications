@@ -20,16 +20,11 @@ namespace WepAppAccessToApi.Controllers
         {
             var client = httpClientFactory.CreateClient();
 
-            //AuthenticationHeaderValue("Bearer", "fa4c82d5b75e4cd351b1ea519c9dfd8312dea97c43f0aa13012d4ff2fd109763");
-            //AuthenticationHeaderValue("Bearer", $"{token}");
-            //AuthenticationHeaderValue("Basic", Convert.ToBase64String(bytes));
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("ApiKey", "8e421ff965cb4935ba56ef7833bf4750");
-
             var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/User");
 
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            request.Headers.Add("ApiKey", "8e421ff965cb4935ba56ef7833bf4750");
+            request.Headers.Add("ApiKey", "8e421ff965cb4935ba56ef7833bf4750");//TODO Apikey do headera
 
             var result = await client.SendAsync(request);
 

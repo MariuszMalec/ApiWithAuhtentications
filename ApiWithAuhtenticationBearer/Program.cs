@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddTransient<UserService>();
 
-builder.Services.AddHttpClient("gorest", httpClient =>
+builder.Services.AddHttpClient("ApiWithBearer", httpClient =>
 {
     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "fa4c82d5b75e4cd351b1ea519c9dfd8312dea97c43f0aa13012d4ff2fd109763");
 });

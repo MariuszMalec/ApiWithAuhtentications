@@ -9,30 +9,33 @@ namespace WepAppAccessToApi.Controllers
     public class UserBearerController : Controller
     {
 
-        private readonly IHttpClientFactory httpClientFactory;
-        private const string AppiUrl = "https://localhost:7270/api";
+        private readonly HttpClient _httpClient;
+        private const string AppiUrl = "https://localhost:7270/api/User";
+        private const string UserUri = "api/User";
 
         public UserBearerController(IHttpClientFactory httpClientFactory)
         {
-            this.httpClientFactory = httpClientFactory;
+            _httpClient = httpClientFactory.CreateClient("ApiWithBearer");
         }
 
         // GET: UserBearerController
         public async Task<IActionResult> Index()
         {
-            var client = httpClientFactory.CreateClient();
-
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "fa4c82d5b75e4cd351b1ea519c9dfd8312dea97c43f0aa13012d4ff2fd109763");
 
             var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/User");
 
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var result = await client.SendAsync(request);
+            var result = await _httpClient.GetAsync(UserUri);
 
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 return Content("Unauthorized!");
+            }
+
+            if (!result.IsSuccessStatusCode)
+            {
+                return Content("error 500!");
             }
 
             var content = await result.Content.ReadAsStringAsync();
