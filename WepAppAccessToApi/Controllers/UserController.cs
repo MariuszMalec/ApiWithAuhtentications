@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using WepAppAccessToApi.Models;
 
 namespace WepAppAccessToApi.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IHttpClientFactory httpClientFactory;

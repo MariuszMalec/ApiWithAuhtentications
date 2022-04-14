@@ -1,8 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
+using WepAppAccessToApi.Areas.Identity.Data;
+using WepAppAccessToApi.Data;
 using WepAppAccessToApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var connectionString = builder.Configuration.GetConnectionString("WepAppAccessToApiContextConnection");builder.Services.AddDbContext<WepAppAccessToApiContext>(options =>
+    options.UseSqlite(connectionString));builder.Services.AddDefaultIdentity<WepAppAccessToApiUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<WepAppAccessToApiContext>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -15,6 +20,7 @@ builder.Services.AddHttpClient("WebAppiUsers", client =>
     client.Timeout = new TimeSpan(0, 0, 30);
     client.DefaultRequestHeaders.Add(
         HeaderNames.Accept, "application/json");
+    client.DefaultRequestHeaders.Add("ApiKey", "8e421ff965cb4935ba56ef7833bf4750");//TODO Apikey do headera nie dziala
 });
 
 builder.Services.AddHttpClient("ApiWithBearer", client =>
@@ -43,7 +49,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -55,5 +64,17 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
+//TODO to dodalem aby dziala z automatu register i logon
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+    endpoints.MapRazorPages();
+});
+
+
 
 app.Run();

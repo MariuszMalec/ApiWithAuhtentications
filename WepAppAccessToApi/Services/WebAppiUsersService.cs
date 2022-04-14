@@ -15,7 +15,7 @@ namespace WepAppAccessToApi.Services
         }
 
         public async Task<List<User>> GetAll()
-        {
+        {            
             var response = await _httpClient.GetAsync(UserUri);
             var responseBody = await response.Content.ReadAsStringAsync();
 
