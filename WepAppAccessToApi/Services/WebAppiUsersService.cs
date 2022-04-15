@@ -15,16 +15,17 @@ namespace WepAppAccessToApi.Services
         }
 
         public async Task<List<User>> GetAll()
-        {            
-            var response = await _httpClient.GetAsync(UserUri);
-            var responseBody = await response.Content.ReadAsStringAsync();
+        {
+            return await GetResource<List<User>>($"{UserUri}");
+            //var response = await _httpClient.GetAsync(UserUri);
+            //var responseBody = await response.Content.ReadAsStringAsync();
 
-            if (!response.IsSuccessStatusCode)
-            {
-                return new List<User>();
-            }
+            //if (!response.IsSuccessStatusCode)
+            //{
+            //    return new List<User>();
+            //}
 
-            return JsonConvert.DeserializeObject<List<User>>(responseBody);
+            //return JsonConvert.DeserializeObject<List<User>>(responseBody);
         }
 
         public async Task<User> GetUserById(int id)
@@ -39,7 +40,7 @@ namespace WepAppAccessToApi.Services
 
             if (!result.IsSuccessStatusCode)
             {
-                throw new Exception("Blad 400!");
+                throw new Exception("Blad 500!");
             }
 
             var content = await result.Content.ReadAsStringAsync();

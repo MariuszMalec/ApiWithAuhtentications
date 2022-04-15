@@ -73,15 +73,26 @@ namespace WepAppAccessToApi.Controllers
 
             var viewModel = JsonConvert.DeserializeObject<List<UserFromNbaApii>>(content);
 
-            return Content($"Result get from Api {content}");
+            //return Content($"Result get from Api {content}");
 
-            MultipleViewModel objAuthViewModel = new MultipleViewModel();
-            objAuthViewModel.AuthenticateModels = model;
-            objAuthViewModel.UserFromNbaApii = viewModel;
+            if (viewModel != null)
+            {
+                //trzeba serilize aby poszlo pomiedzy modelami albo poslac od razu content
+                TempData["UserFromNbaApii"] = JsonConvert.SerializeObject(viewModel);
+                return RedirectToAction(nameof(ViewUsersFromApi));
+            }
 
-            return View(objAuthViewModel);
-
+            return View();
         }
+        public ActionResult ViewUsersFromApi()
+        {
+            var viewModel = JsonConvert.DeserializeObject<List<UserFromNbaApii>>((string)TempData["UserFromNbaApii"]);
+
+            ViewBag.Users = TempData["UserFromNbaApii"];
+
+            return View(viewModel);
+        }
+
 
 
         // GET: WebAppiNbaController/Edit/5
