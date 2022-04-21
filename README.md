@@ -13,7 +13,7 @@
 - Services
 - BasicAuthenticationHandler - basic authorize - username, password
 - UsersStorage
-4. WebAppiUsers - API project (nie dziala! blad autoryzacji Apikey null!)
+4. WebAppiUsers - API project.
 - DataBase SqlLite UsersDb.db users
 - context
 - controllers
@@ -30,4 +30,5 @@
 ## Start projektu
 1. prawy przycisk na solucji "Set Startup Projects"
 2. wybieramy Api i MVC project
-3. Start
+3. Sciagamy Api WebAppiUsers. Zewnetrzny projekt
+4. Start
