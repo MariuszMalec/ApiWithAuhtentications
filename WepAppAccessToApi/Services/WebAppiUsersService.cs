@@ -16,6 +16,7 @@ namespace WepAppAccessToApi.Services
 
         public async Task<List<User>> GetAll()
         {
+
             return await GetResource<List<User>>($"{UserUri}");
             //var response = await _httpClient.GetAsync(UserUri);
             //var responseBody = await response.Content.ReadAsStringAsync();
@@ -36,7 +37,7 @@ namespace WepAppAccessToApi.Services
         private async Task<TReturn> GetResource<TReturn>(string url)
         {
 
-            var result = await _httpClient.GetAsync(url);
+            var result = await _httpClient.GetAsync(url);//pobiera do headera apikey ze startupu
 
             if (!result.IsSuccessStatusCode)
             {
