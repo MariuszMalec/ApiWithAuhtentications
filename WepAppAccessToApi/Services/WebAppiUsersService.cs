@@ -17,6 +17,8 @@ namespace WepAppAccessToApi.Services
         public async Task<List<User>> GetAll()
         {
 
+
+
             return await GetResource<List<User>>($"{UserUri}");
             //var response = await _httpClient.GetAsync(UserUri);
             //var responseBody = await response.Content.ReadAsStringAsync();
@@ -46,7 +48,7 @@ namespace WepAppAccessToApi.Services
 
             if (!result.IsSuccessStatusCode)
             {
-                throw new Exception("Blad 500!");
+                throw new Exception($"Blad ! {result.StatusCode}");//TODO how to get better view if TReturn needed
             }
 
             var content = await result.Content.ReadAsStringAsync();
