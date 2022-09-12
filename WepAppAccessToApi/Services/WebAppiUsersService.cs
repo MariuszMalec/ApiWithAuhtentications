@@ -39,6 +39,11 @@ namespace WepAppAccessToApi.Services
 
             var result = await _httpClient.GetAsync(url);//pobiera do headera apikey ze startupu
 
+            if (result.StatusCode.ToString() == "Unauthorized")
+            {
+                throw new Exception("Blad 401");
+            }
+
             if (!result.IsSuccessStatusCode)
             {
                 throw new Exception("Blad 500!");
