@@ -36,11 +36,14 @@ namespace ApiWithAuhtenticationBearer.Services
             {
                 throw new BadRequestException("Invalid username or password");
             }
+
+            var role = _userService.GetAllRoles().FirstOrDefault();//take role for user
+
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
-                //new Claim(ClaimTypes.Role, $"{user.Role.Name}"),//TODO dodac role
+                new Claim(ClaimTypes.Role, $"{role.Name}"),//TODO dodac role
                 new Claim("DateOfBirth", user.DateOfBirth.Value.ToString("yyyy-MM-dd")),
 
             };
@@ -68,6 +71,12 @@ namespace ApiWithAuhtenticationBearer.Services
 
         public void RegisterUser(RegisterUserDto dto)
         {
+            var user = _userService.GetAll().ToList().Any(u => u.Email == dto.Email);
+            if (user)
+            {
+                throw new BadRequestException($"Email {dto.Email} exist yet!");
+            }
+
             var newUser = new User()
             {
                 Email = dto.Email,

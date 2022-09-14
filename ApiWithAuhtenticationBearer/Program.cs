@@ -1,5 +1,7 @@
+using ApiWithAuhtenticationBearer.Context;
 using ApiWithAuhtenticationBearer.Entities;
 using ApiWithAuhtenticationBearer.Interfaces;
+using ApiWithAuhtenticationBearer.Middleware;
 using ApiWithAuhtenticationBearer.Models;
 using ApiWithAuhtenticationBearer.Services;
 using Microsoft.AspNetCore.Identity;
@@ -40,51 +42,20 @@ builder.Services.AddTransient<UserService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 
-//nie dziala!
-//builder.Services.AddHttpClient("ApiWithBearer", httpClient =>
-//{
-//    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "fa4c82d5b75e4cd351b1ea519c9dfd8312dea97c43f0aa13012d4ff2fd109763");
-//});
-
-//builder.Services.AddAuthentication(OAuthValidationDefaults.AuthenticationScheme)
-//    .AddOAuthValidation();
-
-//builder.Services.AddAuthentication()
-//        .AddCookie(options =>
-//        {
-//            options.LoginPath = "/Account/Unauthorized/";
-//            options.AccessDeniedPath = "/Account/Forbidden/";
-//        })
-//        .AddJwtBearer(options =>
-//        {
-//            options.Audience = "https://localhost:7270/";
-//            options.Authority = "https://localhost:7270/";
-//        });
-
-
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(cfg =>
-//    {
-//        cfg.TokenValidationParameters = new TokenValidationParameters()
-//        {
-//            ValidateIssuer = true,
-//            ValidIssuer = _config["Security:Tokens:Issuer"],
-//            ValidateAudience = true,
-//            ValidAudience = _config["Security:Tokens:Audience"],
-//            ValidateIssuerSigningKey = true,
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Security:Tokens:Key"])),
-//        };
-//    });
-
-
-
-//request.Headers.Authorization = new AuthenticationHeaderValue(scheme: "Bearer", parameter: Token);//do sprawdzenia 
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    //how to add here seedera
+    //var seeder = scope.ServiceProvider.GetRequiredService<UserSeeder>();
+    //seeder.Seed();
+    //SeedData.SeedRole();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -95,6 +66,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthentication(); //TODO to dodane musi byc przed UseHttpsRedirection!!!
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

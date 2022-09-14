@@ -28,6 +28,15 @@ namespace ApiWithAuhtenticationBearer.Controllers
                 return BadRequest($"Brak uzytkowników!");
             return Ok(users);
         }
+        
+        [HttpGet("Roles")]
+        public IActionResult GetRolles()
+        {
+            var roles = _userService.GetAllRoles();
+            if (!roles.Any())
+                return BadRequest($"Brak rol!");
+            return Ok(roles);
+        }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
