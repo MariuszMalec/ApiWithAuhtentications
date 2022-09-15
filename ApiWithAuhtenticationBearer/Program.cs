@@ -1,4 +1,3 @@
-using ApiWithAuhtenticationBearer.Context;
 using ApiWithAuhtenticationBearer.Entities;
 using ApiWithAuhtenticationBearer.Interfaces;
 using ApiWithAuhtenticationBearer.Middleware;

@@ -15,7 +15,9 @@ namespace ApiWithAuhtenticationBearer.Services
 
         private static List<Role> Roles = new List<Role>()
         {
-           new Role() { Id = 1, Name = EnumRole.user.ToString()}
+           new Role() { Id = 1, Name = EnumRole.user.ToString()},
+           new Role() { Id = 2, Name = EnumRole.admin.ToString()},
+           new Role() { Id = 3, Name = EnumRole.manager.ToString()}
         };
 
         private static List<User> Users = new List<User>()
@@ -25,19 +27,41 @@ namespace ApiWithAuhtenticationBearer.Services
 
         public List<User> GetAll()
         {
-            var newUser = new User()//TODO to zmienic za kazdym getem tworzy usera!!
+            var user = Users.Any(u => u.Id == 2);
+            if (!user)
             {
-                Id = 2,
-                Email = "test@example.com",
-                FirstName = "Mariusz",
-                LastName = "Malec",
-                DateOfBirth = DateTime.Now,
-                Nationality = "polish",
-                RoleId = 1
-            };
-            var hashedPassword = _passwordHasher.HashPassword(newUser, "12345");
-            newUser.PasswordHash = hashedPassword;
-            Create(newUser);
+                var newUser = new User()//TODO to zmienic za kazdym getem tworzy usera!!
+                {
+                    Id = 2,
+                    Email = "user@example.com",
+                    FirstName = "Mariusz",
+                    LastName = "Malec",
+                    DateOfBirth = DateTime.Now,
+                    Nationality = "polish",
+                    RoleId = 1
+                };
+                var hashedPassword = _passwordHasher.HashPassword(newUser, "user");
+                newUser.PasswordHash = hashedPassword;
+                Create(newUser);
+            }
+
+            user = Users.Any(u => u.Id == 3);
+            if (!user)
+            {
+                var newUser = new User()//TODO to zmienic za kazdym getem tworzy usera!!
+                {
+                    Id = 3,
+                    Email = "admin@example.com",
+                    FirstName = "Mariusz",
+                    LastName = "Malec",
+                    DateOfBirth = DateTime.Now,
+                    Nationality = "polish",
+                    RoleId = 2
+                };
+                var hashedPassword = _passwordHasher.HashPassword(newUser, "admin");
+                newUser.PasswordHash = hashedPassword;
+                Create(newUser);
+            }
 
             return Users.ToList();
         }

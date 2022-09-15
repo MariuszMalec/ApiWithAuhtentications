@@ -1,5 +1,4 @@
 ﻿using ApiWithAuhtenticationBearer.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +8,7 @@ namespace ApiWithAuhtenticationBearer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : ControllerBase
     {
@@ -21,6 +20,7 @@ namespace ApiWithAuhtenticationBearer.Controllers
         // GET: api/<UserController>
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult Get()
         {
             var users = _userService.GetAll();
@@ -30,6 +30,7 @@ namespace ApiWithAuhtenticationBearer.Controllers
         }
         
         [HttpGet("Roles")]
+        [AllowAnonymous]
         public IActionResult GetRolles()
         {
             var roles = _userService.GetAllRoles();

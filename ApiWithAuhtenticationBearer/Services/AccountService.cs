@@ -43,7 +43,7 @@ namespace ApiWithAuhtenticationBearer.Services
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
-                new Claim(ClaimTypes.Role, $"{role.Name}"),//TODO dodac role
+                new Claim(ClaimTypes.Role, $"{role.Name}"),//TODO to czyta autorize!
                 new Claim("DateOfBirth", user.DateOfBirth.Value.ToString("yyyy-MM-dd")),
 
             };
