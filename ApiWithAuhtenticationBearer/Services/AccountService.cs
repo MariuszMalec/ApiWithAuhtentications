@@ -37,7 +37,11 @@ namespace ApiWithAuhtenticationBearer.Services
                 throw new BadRequestException("Invalid username or password");
             }
 
-            var role = _userService.GetAllRoles().FirstOrDefault();//take role for user
+            //take role for user
+            var roleId = _userService.GetAll().Where(u=>u.Email == dto.Email)
+                .Select(r=>r.RoleId).FirstOrDefault();
+
+            var role = _userService.GetAllRoles().Where(r => r.Id == roleId).FirstOrDefault();
 
             var claims = new List<Claim>()
             {
@@ -45,7 +49,6 @@ namespace ApiWithAuhtenticationBearer.Services
                 new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
                 new Claim(ClaimTypes.Role, $"{role.Name}"),//TODO to czyta autorize!
                 new Claim("DateOfBirth", user.DateOfBirth.Value.ToString("yyyy-MM-dd")),
-
             };
 
             if (!string.IsNullOrEmpty(user.Nationality))
