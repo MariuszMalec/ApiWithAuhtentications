@@ -1,4 +1,5 @@
-﻿using ApiWithAuhtenticationBearer.Services;
+﻿using ApiWithAuhtenticationBearer.Entities;
+using ApiWithAuhtenticationBearer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,9 +42,12 @@ namespace ApiWithAuhtenticationBearer.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [AllowAnonymous]
+        public ActionResult<User> Get([FromRoute] int id)
         {
-            return "value";
+            var user = _userService.GetById(id);
+
+            return Ok(user);
         }
 
         // POST api/<UserController>

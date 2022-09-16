@@ -38,6 +38,7 @@ builder.Services.AddAuthentication(option =>
 builder.Services.AddControllers();
 
 builder.Services.AddTransient<UserService>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 

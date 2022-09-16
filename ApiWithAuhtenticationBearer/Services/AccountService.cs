@@ -3,6 +3,7 @@ using ApiWithAuhtenticationBearer.Exceptions;
 using ApiWithAuhtenticationBearer.Interfaces;
 using ApiWithAuhtenticationBearer.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -23,7 +24,7 @@ namespace ApiWithAuhtenticationBearer.Services
             _authenticationSettings = authenticationSettings;
         }
 
-        public string GenerateJwt(LoginDto dto)
+        public string GenerateJwt([FromBody] LoginDto dto)
         {
             var user = _userService.GetAll().FirstOrDefault(u => u.Email == dto.Email);
             if (user is null)
@@ -72,7 +73,7 @@ namespace ApiWithAuhtenticationBearer.Services
             return tokenHandler.WriteToken(token);
         }
 
-        public void RegisterUser(RegisterUserDto dto)
+        public void RegisterUser([FromBody] RegisterUserDto dto)
         {
             var user = _userService.GetAll().ToList().Any(u => u.Email == dto.Email);
             if (user)

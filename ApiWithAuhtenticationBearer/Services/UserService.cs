@@ -1,6 +1,9 @@
 ﻿
 using ApiWithAuhtenticationBearer.Entities;
 using ApiWithAuhtenticationBearer.Enums;
+using ApiWithAuhtenticationBearer.Exceptions;
+using ApiWithAuhtenticationBearer.Models;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 
 namespace ApiWithAuhtenticationBearer.Services
@@ -8,9 +11,11 @@ namespace ApiWithAuhtenticationBearer.Services
     public class UserService
     {
         private readonly IPasswordHasher<User> _passwordHasher;
-        public UserService(IPasswordHasher<User> passwordHasher)
+        private readonly IMapper _mapper;
+        public UserService(IPasswordHasher<User> passwordHasher, IMapper mapper)
         {
             _passwordHasher = passwordHasher;
+            _mapper = mapper;
         }
 
         private static List<Role> Roles = new List<Role>()
@@ -69,16 +74,24 @@ namespace ApiWithAuhtenticationBearer.Services
         {
             return Roles;
         }
-        public User GetById(int id)
+
+        public UserDto GetById(int id)
         {
-            //Users = GetAll();
-            return Users.SingleOrDefault(u => u.Id == id);
+            var user = GetAll()
+                .FirstOrDefault(u => u.Id == id);
+
+            if (user is null)
+                throw new NotFoundException("User not found");
+
+            var result = _mapper.Map<UserDto>(user);
+            return result;
         }
 
         public void Delete(int id)
         {
-            var user = GetById(id);
-            Users.Remove(user);
+            //var user = GetById(id);
+            //Users.Remove(user);
+            throw new NotImplementedException();
         }
 
         public void Create(User model)
