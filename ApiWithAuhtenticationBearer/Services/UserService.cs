@@ -87,23 +87,41 @@ namespace ApiWithAuhtenticationBearer.Services
             return result;
         }
 
-        public void Delete(int id)
-        {
-            //var user = GetById(id);
-            //Users.Remove(user);
-            throw new NotImplementedException();
-        }
-
-        public void Create(User model)
+        public int Create(User model)
         {
             model.Id = GetNextId();
             Users.Add(model);
+            return model.Id;
         }
+
         public int GetNextId()
         {
             if (!Users.Any())
                 return 0;
             return (Users?.Max(m => m.Id) ?? 0) + 1;
+        }
+
+        public void Delete(int id)
+        {
+            //_logger.LogError($"Restaurant with id: {id} DELETE action invoked");
+
+            //var user = GetAll() 
+            //    .FirstOrDefault(r => r.Id == id);
+
+            //if (user is null)
+            //    throw new NotFoundException("Restaurant not found");
+
+            //var authorizationResult = _authorizationService.AuthorizeAsync(_userContextService.User, restaurant,
+            //    new ResourceOperationRequirement(ResourceOperation.Delete)).Result;
+
+            //if (!authorizationResult.Succeeded)
+            //{
+            //    throw new ForbidException();
+            //}
+
+            //_dbContext.Restaurants.Remove(restaurant);
+            //_dbContext.SaveChanges();
+
         }
     }
 }

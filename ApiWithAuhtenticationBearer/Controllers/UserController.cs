@@ -1,4 +1,5 @@
 ﻿using ApiWithAuhtenticationBearer.Entities;
+using ApiWithAuhtenticationBearer.Models;
 using ApiWithAuhtenticationBearer.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace ApiWithAuhtenticationBearer.Controllers
         // GET: api/<UserController>
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin,manager")]
         public IActionResult Get()
         {
             var users = _userService.GetAll();
@@ -52,8 +53,12 @@ namespace ApiWithAuhtenticationBearer.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Authorize(Roles = "admin")]
+        public ActionResult CreateUser([FromBody] User model)
         {
+            var id = _userService.Create(model);
+
+            return Created($"/api/user/{id}", null);
         }
 
         // PUT api/<UserController>/5
