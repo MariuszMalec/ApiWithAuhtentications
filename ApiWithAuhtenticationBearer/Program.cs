@@ -2,7 +2,9 @@ using ApiWithAuhtenticationBearer.Entities;
 using ApiWithAuhtenticationBearer.Interfaces;
 using ApiWithAuhtenticationBearer.Middleware;
 using ApiWithAuhtenticationBearer.Models;
+using ApiWithAuhtenticationBearer.PolicyAuthorization;
 using ApiWithAuhtenticationBearer.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -35,8 +37,17 @@ builder.Services.AddAuthentication(option =>
 });
 //https://youtu.be/exKLvxaPI6Y?t=3232
 
+//dodanie dostepu w controlerze na poziomie policy
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("HasNationality", builder => builder.RequireClaim("Nationality", "polish"));//wymagany jest nationality claim przy endpoincie
+    //options.AddPolicy("Atleast20", builder => builder.AddRequirements(new MinimumAgeRequirement(20)));//wlasna polityka
+});
+//https://youtu.be/Ei7Uk-UgSAY?t=1355
+
 builder.Services.AddControllers();
 
+//builder.Services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();//TODO nie dziala!!??
 builder.Services.AddTransient<UserService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();

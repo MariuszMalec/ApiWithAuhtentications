@@ -27,7 +27,7 @@ namespace ApiWithAuhtenticationBearer.Services
 
         private static List<User> Users = new List<User>()
         {
-            new User(1, "mario@example.com" , "Mario", "Bros", DateTime.Now, "polish","",1)       
+            new User(1, "hans@example.com" , "Hans", "Klos", DateTime.Now, "german","",1)       
         };
 
         public List<User> GetAll()
@@ -39,10 +39,10 @@ namespace ApiWithAuhtenticationBearer.Services
                 {
                     Id = 2,
                     Email = "user@example.com",
-                    FirstName = "Mariusz",
-                    LastName = "Malec",
+                    FirstName = "Michel",
+                    LastName = "Jordan",
                     DateOfBirth = DateTime.Now,
-                    Nationality = "polish",
+                    Nationality = "usa",
                     RoleId = 1
                 };
                 var hashedPassword = _passwordHasher.HashPassword(newUser, "user");

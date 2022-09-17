@@ -43,7 +43,7 @@ namespace ApiWithAuhtenticationBearer.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        [AllowAnonymous]
+        [Authorize(Policy = "HasNationality")]
         public ActionResult<User> Get([FromRoute] int id)
         {
             var user = _userService.GetById(id);
