@@ -21,29 +21,44 @@ namespace ApiWithAuhtenticationBearer.Services
         private static List<Role> Roles = new List<Role>()
         {
            new Role() { Id = 1, Name = EnumRole.user.ToString()},
-           new Role() { Id = 2, Name = EnumRole.admin.ToString()},
-           new Role() { Id = 3, Name = EnumRole.manager.ToString()}
+           new Role() { Id = 2, Name = EnumRole.manager.ToString()},
+           new Role() { Id = 3, Name = EnumRole.admin.ToString()}
         };
 
-        private static List<User> Users = new List<User>()
-        {
-            new User(1, "hans@example.com" , "Hans", "Klos", DateTime.Now, "german","",1)       
-        };
+        private static List<User> Users = new List<User>() { };
 
         public List<User> GetAll()
         {
-            var user = Users.Any(u => u.Id == 2);
+            var user = Users.Any(u => u.Id == 1);
             if (!user)
             {
                 var newUser = new User()//TODO to zmienic za kazdym getem tworzy usera!!
                 {
-                    Id = 2,
-                    Email = "user@example.com",
+                    Email = "jordan@example.com",
                     FirstName = "Michel",
                     LastName = "Jordan",
-                    DateOfBirth = DateTime.Now,
+                    DateOfBirth = new DateTime(2013,5,1),
                     Nationality = "usa",
-                    RoleId = 1
+                    RoleId = 2,
+                    Role = new Role { Id = 2, Name = EnumRole.manager.ToString() }
+                };
+                var hashedPassword = _passwordHasher.HashPassword(newUser, "jordan");
+                newUser.PasswordHash = hashedPassword;
+                Create(newUser);
+            }
+
+            user = Users.Any(u => u.Id == 2);
+            if (!user)
+            {
+                var newUser = new User()//TODO to zmienic za kazdym getem tworzy usera!!
+                {
+                    Email = "user@example.com",
+                    FirstName = "User",
+                    LastName = "Userek",
+                    DateOfBirth = new DateTime(2016, 5, 1),
+                    Nationality = "usa",
+                    RoleId = 1,
+                    Role = new Role { Id = 1, Name = EnumRole.user.ToString() }
                 };
                 var hashedPassword = _passwordHasher.HashPassword(newUser, "user");
                 newUser.PasswordHash = hashedPassword;
@@ -55,13 +70,13 @@ namespace ApiWithAuhtenticationBearer.Services
             {
                 var newUser = new User()//TODO to zmienic za kazdym getem tworzy usera!!
                 {
-                    Id = 3,
                     Email = "admin@example.com",
                     FirstName = "Mariusz",
                     LastName = "Malec",
-                    DateOfBirth = DateTime.Now,
+                    DateOfBirth = new DateTime(2014, 5, 1),
                     Nationality = "polish",
-                    RoleId = 2
+                    RoleId = 3,
+                    Role = new Role { Id = 3, Name = EnumRole.admin.ToString() }
                 };
                 var hashedPassword = _passwordHasher.HashPassword(newUser, "admin");
                 newUser.PasswordHash = hashedPassword;
@@ -97,7 +112,7 @@ namespace ApiWithAuhtenticationBearer.Services
         public int GetNextId()
         {
             if (!Users.Any())
-                return 0;
+                return 1;
             return (Users?.Max(m => m.Id) ?? 0) + 1;
         }
 

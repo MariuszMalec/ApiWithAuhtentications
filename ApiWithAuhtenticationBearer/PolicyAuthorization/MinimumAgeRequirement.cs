@@ -1,8 +1,8 @@
-﻿using ApiWithAuhtenticationBearer.Interfaces;
+﻿using Microsoft.AspNetCore.Authorization;
 
 namespace ApiWithAuhtenticationBearer.PolicyAuthorization
 {
-    public class MinimumAgeRequirement : IAuthorizationRequirement
+    public class MinimumAgeRequirement : IAuthorizationRequirement//tutaj musi byc aspnetcore.authorization
     {
         public int MinimumAge { get; }
 

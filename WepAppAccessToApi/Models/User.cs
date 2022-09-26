@@ -7,6 +7,6 @@
 
         public string? LastName { get; set; }
 
-        public int Sso { get; set; }
+        public int? Sso { get; set; }
     }
 }

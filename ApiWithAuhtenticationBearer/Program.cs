@@ -41,13 +41,13 @@ builder.Services.AddAuthentication(option =>
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("HasNationality", builder => builder.RequireClaim("Nationality", "polish"));//wymagany jest nationality claim przy endpoincie
-    //options.AddPolicy("Atleast20", builder => builder.AddRequirements(new MinimumAgeRequirement(20)));//wlasna polityka
+    options.AddPolicy("Atleast20", builder => builder.AddRequirements(new MinimumAgeRequirement(25)));//wlasna polityka
 });
 //https://youtu.be/Ei7Uk-UgSAY?t=1355
 
 builder.Services.AddControllers();
 
-//builder.Services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();//TODO nie dziala!!??
+builder.Services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();//TODO nie dziala!!??
 builder.Services.AddTransient<UserService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();

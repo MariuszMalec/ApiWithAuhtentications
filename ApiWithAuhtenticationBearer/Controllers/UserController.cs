@@ -10,8 +10,7 @@ namespace ApiWithAuhtenticationBearer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize]
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;
@@ -22,7 +21,7 @@ namespace ApiWithAuhtenticationBearer.Controllers
         // GET: api/<UserController>
 
         [HttpGet]
-        [Authorize(Roles = "admin,manager")]
+        //[Authorize(Roles = "admin,manager")]
         public IActionResult Get()
         {
             var users = _userService.GetAll();
@@ -43,7 +42,8 @@ namespace ApiWithAuhtenticationBearer.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        [Authorize(Policy = "HasNationality")]
+        //[Authorize(Policy = "HasNationality")]
+        [Authorize(Policy = "Atleast20")]
         public ActionResult<User> Get([FromRoute] int id)
         {
             var user = _userService.GetById(id);

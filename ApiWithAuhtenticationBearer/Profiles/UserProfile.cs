@@ -1,5 +1,4 @@
 ﻿using ApiWithAuhtenticationBearer.Entities;
-using ApiWithAuhtenticationBearer.Models;
 using AutoMapper;
 
 namespace ApiWithAuhtenticationBearer.Profiles
@@ -8,7 +7,7 @@ namespace ApiWithAuhtenticationBearer.Profiles
     {
         public UserProfile()
         {
-            CreateMap<User, UserDto>()
+            CreateMap<User, Models.UserDto>()
             //.ForMember(d => d.UserRole, o => o.MapFrom(s => $"admin"))
             ;
         }
