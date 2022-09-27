@@ -7,7 +7,9 @@ namespace WepAppAccessToApi.Profiles
     {
         public UserFromBearerToUserDtoProfile()
         {
-            CreateMap<UserGet, UserDto>();
+            CreateMap<UserGet, UserDto>()
+                .ForMember(d => d.PasswordHash, o => o.Ignore());
+            ;
         }
     }
 }

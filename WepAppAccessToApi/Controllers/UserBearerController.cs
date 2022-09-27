@@ -15,7 +15,7 @@ namespace WepAppAccessToApi.Controllers
         private const string UserUri = "api/User";
         private readonly IMapper _mapper;
 
-        public UserBearerController(IHttpClientFactory httpClientFactory, IMapper mapper = null)
+        public UserBearerController(IHttpClientFactory httpClientFactory, IMapper mapper)
         {
             //_httpClient = httpClientFactory.CreateClient("ApiWithBearer");
             _httpClientFactory = httpClientFactory;
@@ -55,9 +55,9 @@ namespace WepAppAccessToApi.Controllers
 
             var model = JsonConvert.DeserializeObject<List<UserGet>>(content);
 
-            //var dtos = _mapper.Map<List<UserDto>>(model);//TODO automatyczne mapowanie nie dziala, poprawic w profile
+            var models = _mapper.Map<IEnumerable<UserDto>>(model);//automatyczne mapowanie
 
-            var models = model.Select(MapUserGetToUserModel);//reczne mapowanie dzila
+            //var models = model.Select(MapUserGetToUserModel);//reczne mapowanie
 
             return View(models);
         }
