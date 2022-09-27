@@ -1,0 +1,41 @@
+﻿@model WepAppAccessToApi.Models.AuthenticationBearerModel
+
+@{
+    ViewData["Title"] = "GetById";
+}
+
+<h1>GetById</h1>
+
+<h5> Odpal przez dotnet run to api ApiWithAuhtenticationBearer  </h5>
+<h5> wyslij zapytanie na login i pobierz tokena</h5>
+
+<h4>AuthenticationBearerModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GetById">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+@*            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Token" class="control-label"></label>
+                <input asp-for="Token" class="form-control" />
+                <span asp-validation-for="Token" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="GetUsers" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to home</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

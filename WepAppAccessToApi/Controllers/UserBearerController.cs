@@ -23,7 +23,8 @@ namespace WepAppAccessToApi.Controllers
         }
 
         // GET: UserBearerController
-        public async Task<IActionResult> Index()//Nie dzial add view tutaj!
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
 
             var client = _httpClientFactory.CreateClient();
@@ -35,7 +36,7 @@ namespace WepAppAccessToApi.Controllers
             //TODO jak dodac ten token do zapytania?
             //zalogowac sie w ApiWithAuhtenticationBearer, otrzymany token ktory skopiowac nizej
             //i odpalic to Web app, dziala 240min, czas zapisany w patrz aspsettings.json
-            string token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiTWFyaXVzeiBNYWxlYyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImFkbWluIiwiRGF0ZU9mQmlydGgiOiIyMDE0LTA1LTAxIiwiTmF0aW9uYWxpdHkiOlsicG9saXNoIiwicG9saXNoIl0sImV4cCI6MTY2NDIyMzMxNSwiaXNzIjoiaHR0cDovL0FwaVdpdGhBdWh0ZW50aWNhdGlvbkJlYXJlci5jb20iLCJhdWQiOiJodHRwOi8vQXBpV2l0aEF1aHRlbnRpY2F0aW9uQmVhcmVyLmNvbSJ9.8_3Y3JcwqEO92lXNk0ODj09k02wP5Q6z13oAlW7gm10";
+            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiTWFyaXVzeiBNYWxlYyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImFkbWluIiwiRGF0ZU9mQmlydGgiOiIyMDE0LTA1LTAxIiwiTmF0aW9uYWxpdHkiOlsicG9saXNoIiwicG9saXNoIl0sImV4cCI6MTY2NDMwMjQ4NSwiaXNzIjoiaHR0cDovL0FwaVdpdGhBdWh0ZW50aWNhdGlvbkJlYXJlci5jb20iLCJhdWQiOiJodHRwOi8vQXBpV2l0aEF1aHRlbnRpY2F0aW9uQmVhcmVyLmNvbSJ9.FfeYwDkAHSu4ZI3kGyypZ32lQI9VJE-uzT3Vec2-RqY";
 
             request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -74,10 +75,10 @@ namespace WepAppAccessToApi.Controllers
                 Nationality = get.Nationality,
                 PasswordHash = "***",
                 RoleId = get.RoleId,
-                Role = new Role ()
+                Role = new Role()
                 {
-                    Id=get.Role.Id,
-                    Name=get.Role.Name
+                    Id = get.Role.Id,
+                    Name = get.Role.Name
                 }
             };
         }
@@ -107,10 +108,81 @@ namespace WepAppAccessToApi.Controllers
             return View(model);
         }
 
-        // GET: UserBearerController/Details/5
         public ActionResult Details(int id)
         {
             return View();
+        }
+
+        public ActionResult GetById()
+        {
+            return View();
+        }
+
+        // POST: 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> GetById(AuthenticationBearerModel model)
+        {
+            try
+            {
+                var client = _httpClientFactory.CreateClient();
+
+                var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}");
+
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", model.Token);
+
+                var result = await client.SendAsync(request);
+
+                if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    return Content("Unauthorized!");
+                }
+
+                if (!result.IsSuccessStatusCode)
+                {
+                    return Content("error 500!");
+                }
+
+                var content = await result.Content.ReadAsStringAsync();
+
+                var getUsers = JsonConvert.DeserializeObject<List<UserGet>>(content);
+
+                var models = _mapper.Map<IEnumerable<UserDto>>(getUsers);
+
+                //TODO pytanie ? czy da sie przekazac bezposrednio model?
+
+                //pierwszy sposob
+                //TempData["Datas"] = content;//przekazuje jako tekst i trzeba w redirection view deserializowac ale brak mapowania
+                //return RedirectToAction("GetUsers", "UserBearer", "Users");
+
+                //pierwszy sposob z mapowaniem
+                return RedirectToAction("GetUsers", "UserBearer", new { param = JsonConvert.SerializeObject(models) });
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult GetUsers(string param)
+        {
+            if (param == string.Empty)
+            {
+                return View();
+            }
+
+            var model = JsonConvert.DeserializeObject<IEnumerable<UserDto>>(param);
+
+            //pierwszy sposob
+            //if (TempData["Datas"] is string s)
+            //{
+            //    var model = JsonConvert.DeserializeObject<IEnumerable<UserDto>>(s);
+            //    return View(model);
+            //}
+
+            return View(model);
         }
 
         // GET: UserBearerController/Create
