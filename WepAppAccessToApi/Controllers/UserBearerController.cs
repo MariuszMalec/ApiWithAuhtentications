@@ -86,11 +86,13 @@ namespace WepAppAccessToApi.Controllers
         public async Task<IActionResult> GetRolles()//TODO dodac View
         {
 
-            //var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/Roles");
+            var client = _httpClientFactory.CreateClient();
 
-            //request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/Roles");
 
-            var result = await _httpClient.GetAsync($"{UserUri}/Roles");
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var result = await client.SendAsync(request);
 
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
