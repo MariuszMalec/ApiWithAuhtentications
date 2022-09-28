@@ -1,7 +1,7 @@
 ﻿@model WepAppAccessToApi.Models.AuthenticationBearerModel
 
 @{
-    ViewData["Title"] = "GetById";
+    ViewData["Title"] = "GetAllByToken";
 }
 
 <h1>GetById</h1>
@@ -13,7 +13,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="GetById">
+        <form asp-action="GetAllByToken">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 @*            <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>

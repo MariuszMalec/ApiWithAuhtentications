@@ -113,7 +113,7 @@ namespace WepAppAccessToApi.Controllers
             return View();
         }
 
-        public ActionResult GetById()
+        public ActionResult GetAllByToken()
         {
             return View();
         }
@@ -121,10 +121,9 @@ namespace WepAppAccessToApi.Controllers
         // POST: 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> GetById(AuthenticationBearerModel model)
+        public async Task<ActionResult> GetAllByToken(AuthenticationBearerModel model)
         {
-            try
-            {
+
                 var client = _httpClientFactory.CreateClient();
 
                 var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}");
@@ -158,12 +157,7 @@ namespace WepAppAccessToApi.Controllers
                 //return RedirectToAction("GetUsers", "UserBearer", "Users");
 
                 //pierwszy sposob z mapowaniem
-                return RedirectToAction("GetUsers", "UserBearer", new { param = JsonConvert.SerializeObject(models) });
-            }
-            catch
-            {
-                return View();
-            }
+                return RedirectToAction("GetUsers", "UserBearer", new { param = JsonConvert.SerializeObject(models) });       
         }
 
         public ActionResult GetUsers(string param)
