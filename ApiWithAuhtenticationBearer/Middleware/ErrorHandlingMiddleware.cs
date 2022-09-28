@@ -16,6 +16,16 @@ namespace ApiWithAuhtenticationBearer.Middleware
             {
                 await next.Invoke(context);
             }
+            catch (UnauthorizedException unauthorizedException)
+            {
+                context.Response.StatusCode = 401;
+                await context.Response.WriteAsync(unauthorizedException.Message);
+            }
+            catch (BadRequestException badRequestException)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync(badRequestException.Message);
+            }
             catch (NotFoundException notFoundException)
             {
                 context.Response.StatusCode = 404;
@@ -26,7 +36,7 @@ namespace ApiWithAuhtenticationBearer.Middleware
                 _logger.LogError(e, e.Message);
 
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsync("Something went wrong");
+                await context.Response.WriteAsync("Unexcepcted error! 500");
             }
         }
     }
