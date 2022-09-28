@@ -1,4 +1,7 @@
-﻿namespace WepAppAccessToApi.Middleware
+﻿using System.Net;
+using WepAppAccessToApi.Exceptions;
+
+namespace WepAppAccessToApi.Middleware
 {
     public class ErrorHandlingMiddleware : IMiddleware
     {
@@ -14,17 +17,18 @@
             {
                 await next.Invoke(context);
             }
-            //catch (NotFoundException notFoundException)
-            //{
-            //    context.Response.StatusCode = 404;
-            //    await context.Response.WriteAsync(notFoundException.Message);
-            //}
+            catch (NotFoundException notFoundException)
+            {
+                context.Response.StatusCode = 404;
+                await context.Response.WriteAsync(notFoundException.Message);
+            }
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
 
-                context.Response.StatusCode = 500;
-                await context.Response.WriteAsync("Something went wrong");
+                context.Response.ContentType = "application/json";
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                await context.Response.WriteAsync(@$"Error {e.Message}");
             }
         }
     }
