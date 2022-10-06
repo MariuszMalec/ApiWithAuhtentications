@@ -6,30 +6,38 @@
     <title>@ViewData["Title"] - WepAppAccessToApi</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/layout.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
 
-<body>
-    <main role="main">
+<body class="mybody-bg-image">
+
+
         <div class="row">
 
-            <div class="col-2">
 
-                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <img src="~/icons8-api-100.png" class="d-inline-block align-middle rounded"/>                
-                </a>
+        <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 300px;">
 
-                <hr>
+            <nav class="hb-navbar hb-navbar-top navbar sticky-top navbar-expand-sm navbar-toggleable-sm box-shadow">
+
 
                 <ul class="nav nav-pills flex-column mb-auto">
 
+                    <li>
+                        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                            <img src="~/icons8-api-100.png" class="d-inline-block align-middle rounded" />
+                        </a>
+                    </li>
+
                     <partial name="_LoginPartial" />
 
+                    <hr />
+
                     <li>
-                        <a class="nav-link text-dark border border-primary rounded" asp-area="" asp-controller="Home" asp-action="Index">
+                        <a class="nav-link text-dark border border-success rounded" asp-area="" asp-controller="Home" asp-action="Index">
                             <i class="bi bi-house "></i>
                             Home
                         </a>
@@ -79,6 +87,8 @@
                     </li>
                 </ul>
 
+                </nav>
+
             </div>
 
             <div class="col-10 border-top">
@@ -86,7 +96,14 @@
             </div>
 
         </div>
-    </main>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - ShotApi.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
