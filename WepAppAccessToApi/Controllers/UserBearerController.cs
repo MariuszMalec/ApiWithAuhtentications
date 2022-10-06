@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Serilog;
 using System.Net.Http.Headers;
 using WepAppAccessToApi.Models;
 
@@ -44,11 +45,13 @@ namespace WepAppAccessToApi.Controllers
 
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
+                Log.Logger.Warning($"Token is not {result.StatusCode}");
                 return Content("Unauthorized!");
             }
 
             if (!result.IsSuccessStatusCode)
             {
+                Log.Logger.Error($"error , {result.StatusCode}");
                 return Content("error 500!");
             }
 
@@ -138,12 +141,14 @@ namespace WepAppAccessToApi.Controllers
 
                 if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
+                    Log.Logger.Warning($"Token is not {result.StatusCode}");
                     return Content("Unauthorized!");
                 }
 
                 if (!result.IsSuccessStatusCode)
                 {
-                    return Content("error 500!");
+                   Log.Logger.Error($"error , {result.StatusCode}");
+                   return Content("error 500!");
                 }
 
                 var content = await result.Content.ReadAsStringAsync();

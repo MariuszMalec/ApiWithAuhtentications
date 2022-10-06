@@ -20,12 +20,12 @@ namespace WepAppAccessToApi.Middleware
             catch (NotFoundException notFoundException)
             {
                 context.Response.StatusCode = 404;
+                _logger.LogError($"NotFoundException, StatusCode 404!");
                 await context.Response.WriteAsync(notFoundException.Message);
             }
             catch (Exception e)
             {
                 _logger.LogError(e, e.Message);
-
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 await context.Response.WriteAsync(@$"Error {e.Message}");

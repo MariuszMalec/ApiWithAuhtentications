@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Serilog;
 using WepAppAccessToApi.Models;
 
 namespace WepAppAccessToApi.Services
@@ -16,9 +17,6 @@ namespace WepAppAccessToApi.Services
 
         public async Task<List<User>> GetAll()
         {
-
-
-
             return await GetResource<List<User>>($"{UserUri}");
             //var response = await _httpClient.GetAsync(UserUri);
             //var responseBody = await response.Content.ReadAsStringAsync();
@@ -41,13 +39,17 @@ namespace WepAppAccessToApi.Services
 
             var result = await _httpClient.GetAsync(url);//pobiera do headera apikey ze startupu
 
+            Log.Logger.Information($"Pobieram dane z {url}");
+
             if (result.StatusCode.ToString() == "Unauthorized")
             {
+                Log.Logger.Error("Unauthorized!");
                 throw new Exception("Blad 401");
             }
 
             if (!result.IsSuccessStatusCode)
             {
+                Log.Logger.Error($"StatusCode : {result.StatusCode}");
                 throw new Exception($"Blad ! {result.StatusCode}");//TODO how to get better view if TReturn needed
             }
 
