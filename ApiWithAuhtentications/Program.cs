@@ -2,6 +2,7 @@ using ApiWithAuhtentications.Authentication.ApiKey;
 using ApiWithAuhtentications.Authentication.Authentication.ApiKey;
 using ApiWithAuhtentications.Middleware;
 using ApiWithAuhtentications.Services;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.AddTransient<UserService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 
 //must be added!
 ConfigurationManager configuration = builder.Configuration;
@@ -23,6 +24,34 @@ builder.Services
         sharedOptions.DefaultScheme = ApiKeyAuthenticationOptions.AuthenticationScheme;
     })
     .AddApiKey<ApiKeyAuthenticationService>(options => configuration.Bind("ApiKeyAuth", options));
+
+
+builder.Services.AddSwaggerGen(option =>
+{
+    option.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiWithAuhtenticationApiKey", Version = "v1" });
+    option.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter a valid apikey",
+        Name = "ApiKey",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="ApiKey"
+                }
+            },
+            new string[]{}
+        }
+    });
+});
 
 var app = builder.Build();
 
