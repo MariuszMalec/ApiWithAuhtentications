@@ -7,12 +7,12 @@ using WepAppAccessToApi.Models;
 namespace WepAppAccessToApi.Controllers
 {
     [Authorize]
-    public class UserController : Controller
+    public class UserApiKeyController : Controller
     {
         private readonly IHttpClientFactory httpClientFactory;
         private const string AppiUrl = "https://localhost:7172/api";
 
-        public UserController(IHttpClientFactory httpClientFactory)
+        public UserApiKeyController(IHttpClientFactory httpClientFactory)
         {
             this.httpClientFactory = httpClientFactory;
         }

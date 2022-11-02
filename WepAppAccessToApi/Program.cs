@@ -36,7 +36,7 @@ builder.Services.AddHttpClient("WebAppiUsers", client =>
     client.Timeout = new TimeSpan(0, 0, 30);
     client.DefaultRequestHeaders.Add(
         HeaderNames.Accept, "application/json");
-    client.DefaultRequestHeaders.Add("ApiKey", "8e421ff965cb4935ba56ef7833bf4750");//TODO Apikey do headera nie dziala
+    client.DefaultRequestHeaders.Add("ApiKey", "e421ff965cb4935ba56ef7833bf4750");//TODO Apikey do headera nie dziala
 });
 
 builder.Services.AddHttpClient("ApiWithBearer", client =>
