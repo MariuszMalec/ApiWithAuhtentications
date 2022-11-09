@@ -14,17 +14,21 @@
         </li>
         <li class="nav-item">
             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button id="logout" type="submit" class="nav-link btn btn-link text-dark round"><i class="bi bi-box-arrow-right"></i>Logout</button>
+                <button class="button-92" id="logout" type="submit"><i class="bi bi-box-arrow-right"></i>Logout</button>
             </form>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark border border-primary rounded" id="register" asp-area="Identity" asp-page="/Account/Register"><i class="bi bi-door-open"></i>   Register</a>
+            <form id="register" class="form-inline" asp-area="Identity" asp-page="/Account/Register"})">
+                    <button class="button-92" id="register" type="submit"><i class="bi bi-door-open"></i> Register</button>
+            </form>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark border border-primary rounded" id="login" asp-area="Identity" asp-page="/Account/Login"><i class="bi bi-box-arrow-in-left"></i>   Login</a>
+            <form id="login" class="form-inline" asp-area="Identity" asp-page="/Account/Login"})">
+                    <button class="button-92" id="login" type="submit"><i class="bi bi-box-arrow-in-left"></i> Login</button>
+            </form>
         </li>
     }
     </ul>

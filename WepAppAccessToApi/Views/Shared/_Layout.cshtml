@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/layout.css" />
+    <link rel="stylesheet" href="~/css/stylesButtonMenu.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -23,12 +24,17 @@
 
             <nav class="hb-navbar hb-navbar-top navbar sticky-top navbar-expand-sm navbar-toggleable-sm box-shadow">
 
+               
+
 
                 <ul class="nav nav-pills flex-column mb-auto">
+
+                    
 
                     <li>
                         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                             <img src="~/icons8-api-100.png" class="d-inline-block align-middle rounded" />
+                            
                         </a>
                     </li>
 
@@ -36,58 +42,60 @@
 
                     <hr />
 
+                    
+
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button type="button" class="button-85" data-bs-toggle="dropdown" aria-expanded="false">
                             Main Menu
                         </button>
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="nav-link text-dark border border-success rounded-pill border-3" asp-area="" asp-controller="Home" asp-action="Index">
+                                <a class="button-69" asp-area="" asp-controller="Home" asp-action="Index">
                                     <i class="bi bi-house "></i>
                                     Home
                                 </a>
                             </li>
 
                             <li>
-                                <a class="nav-link text-dark border border-warning rounded-pill border-2" asp-area="" asp-controller="UserApiKey" asp-action="Index">
+                                <a class="button-69" asp-area="" asp-controller="UserApiKey" asp-action="Index">
                                     <i class="bi bi-key"></i>
-                                    Get users from Api (APiKey)
+                                    With ApiKey
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link text-dark border border-success rounded" asp-area="" asp-controller="UserBearer" asp-action="Index">
-                                    <img src="~/icons8-mail-48.png" class="d-inline-block align-middle rounded" />
-                                    Get users from Api Users with token authorize (Bearer)
+                                <a class="button-69" asp-area="" asp-controller="UserBearer" asp-action="Index">
+                                    <i class="bi bi-envelope-fill"></i>
+                                    With token (Bearer)
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link text-dark border border-success rounded" asp-area="" asp-controller="UserBearer" asp-action="GetAllByToken">
-                                    <img src="~/81052_mb_tok_icon_48.png" class="d-inline-block align-middle rounded" />
-                                    Get users from Api Users with token authorize (Bearer)
+                                <a class="button-69" asp-area="" asp-controller="UserBearer" asp-action="GetAllByToken">
+                                    <i class="bi bi-envelope-fill"></i>
+                                    With token (Bearer)
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link text-dark border border-success rounded" asp-area="" asp-controller="UserBearer" asp-action="GetRolles">
-                                    <img src="~/free-48.png" class="d-inline-block align-middle rounded" />
-                                    Get users from Api Roles without authorize (Bearer)
+                                <a class="button-69" asp-area="" asp-controller="UserBearer" asp-action="GetRolles">
+                                    <i class="bi bi-universal-access-circle"></i>                                    
+                                    Get Roles without authorize (Bearer)
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link text-dark border border-success rounded" asp-area="" asp-controller="WebAppiUsers" asp-action="Index">
-                                    <i class="bi bi-person me-2"></i>
-                                    Get users from WebAppiUsers ApiKey w StartUp(inny projekt Api)
+                                <a class="button-69" asp-area="" asp-controller="WebAppiUsers" asp-action="Index">
+                                    <i class="bi bi-skip-start-btn-fill"></i>
+                                    ApiKey in StartUp
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link text-dark border border-success rounded active" asp-area="" asp-controller="WebAppiNba" asp-action="Index">
-                                    <i class="bi bi-people"></i>
-                                    Get users from WebAppiNBA
+                                <a class="button-69 active" asp-area="" asp-controller="WebAppiNba" asp-action="Index">
+                                    <i class="bi bi-basket3"></i>
+                                    WebAppiNBA without Authorize
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link text-dark border border-success rounded" asp-area="" asp-controller="WebAppiNba" asp-action="GetAllUsersWithAuthenticate">
-                                    <i class="bi bi-key"></i>
-                                    Get users from WebAppiNBA(BasicAuthorize)
+                                <a class="button-69" asp-area="" asp-controller="WebAppiNba" asp-action="GetAllUsersWithAuthenticate">
+                                    <i class="bi bi-basket3"></i>
+                                    WebAppiNBA (BasicAuthorize)
                                 </a>
                             </li>
                         </ul>
