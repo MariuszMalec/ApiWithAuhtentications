@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Serilog;
 using System.Net.Http.Headers;
+using WepAppAccessToApi.Exceptions;
 using WepAppAccessToApi.Models;
 
 namespace WepAppAccessToApi.Controllers
@@ -37,16 +38,18 @@ namespace WepAppAccessToApi.Controllers
             //TODO jak dodac ten token do zapytania?
             //zalogowac sie w ApiWithAuhtenticationBearer, otrzymany token ktory skopiowac nizej
             //i odpalic to Web app, dziala 240min, czas zapisany w patrz aspsettings.json
-            var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiTWFyaXVzeiBNYWxlYyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImFkbWluIiwiRGF0ZU9mQmlydGgiOiIyMDE0LTA1LTAxIiwiTmF0aW9uYWxpdHkiOlsicG9saXNoIiwicG9saXNoIl0sImV4cCI6MTY2NDMwMjQ4NSwiaXNzIjoiaHR0cDovL0FwaVdpdGhBdWh0ZW50aWNhdGlvbkJlYXJlci5jb20iLCJhdWQiOiJodHRwOi8vQXBpV2l0aEF1aHRlbnRpY2F0aW9uQmVhcmVyLmNvbSJ9.FfeYwDkAHSu4ZI3kGyypZ32lQI9VJE-uzT3Vec2-RqY";
+            //var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiTWFyaXVzeiBNYWxlYyIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImFkbWluIiwiRGF0ZU9mQmlydGgiOiIyMDE0LTA1LTAxIiwiTmF0aW9uYWxpdHkiOlsicG9saXNoIiwicG9saXNoIl0sImV4cCI6MTY2NDMwMjQ4NSwiaXNzIjoiaHR0cDovL0FwaVdpdGhBdWh0ZW50aWNhdGlvbkJlYXJlci5jb20iLCJhdWQiOiJodHRwOi8vQXBpV2l0aEF1aHRlbnRpY2F0aW9uQmVhcmVyLmNvbSJ9.FfeYwDkAHSu4ZI3kGyypZ32lQI9VJE-uzT3Vec2-RqY";
+            //request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            //TODO authoryzacja jako Apikey wstawiany do hedeara automatycznie pochodzi ze program.cs!
 
             var result = await client.SendAsync(request);
 
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 Log.Logger.Warning($"Token is not {result.StatusCode}");
-                return Content("Unauthorized!");
+                //return Content("Unauthorized!");
+                throw new UnauthorizedException("Unauthorized!!");
             }
 
             if (!result.IsSuccessStatusCode)

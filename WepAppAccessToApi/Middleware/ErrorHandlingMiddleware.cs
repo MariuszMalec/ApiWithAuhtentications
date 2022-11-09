@@ -17,6 +17,12 @@ namespace WepAppAccessToApi.Middleware
             {
                 await next.Invoke(context);
             }
+            catch (UnauthorizedException unauthorizedException)
+            {
+                context.Response.StatusCode = 401;
+                _logger.LogError($"Unauthorized!, StatusCode 401!");
+                await context.Response.WriteAsync(unauthorizedException.Message);
+            }
             catch (NotFoundException notFoundException)
             {
                 context.Response.StatusCode = 404;
