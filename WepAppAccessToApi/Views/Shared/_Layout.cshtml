@@ -15,97 +15,24 @@
 </head>
 
 <body class="mybody-bg-image">
-
-
         <div class="row">
-
-
         <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 300px;">
-
             <nav class="hb-navbar hb-navbar-top navbar sticky-top navbar-expand-sm navbar-toggleable-sm box-shadow">
-
-               
-
-
                 <ul class="nav nav-pills flex-column mb-auto">
-
-                    
-
                     <li>
                         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                            <img src="~/icons8-api-100.png" class="d-inline-block align-middle rounded" />
-                            
+                            <img src="~/icons8-api-100.png" class="d-inline-block align-middle rounded" />                       
                         </a>
                     </li>
-
                     <partial name="_LoginPartial" />
-
-                    <hr />
-
-                    
-
-                    <div class="btn-group" role="group">
-                        <button type="button" class="button-85" data-bs-toggle="dropdown" aria-expanded="false">
-                            Main Menu
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="button-69" asp-area="" asp-controller="Home" asp-action="Index">
-                                    <i class="bi bi-house "></i>
-                                    Home
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="button-69" asp-area="" asp-controller="UserApiKey" asp-action="Index">
-                                    <i class="bi bi-key"></i>
-                                    With ApiKey
-                                </a>
-                            </li>
-                            <li>
-                                <a class="button-69" asp-area="" asp-controller="UserBearer" asp-action="GetAllByToken">
-                                    <i class="bi bi-envelope-fill"></i>
-                                    With token (Bearer)
-                                </a>
-                            </li>
-                            <li>
-                                <a class="button-69" asp-area="" asp-controller="UserBearer" asp-action="GetRolles">
-                                    <i class="bi bi-universal-access-circle"></i>                                    
-                                    Get Roles without authorize (Bearer)
-                                </a>
-                            </li>
-                            <li>
-                                <a class="button-69" asp-area="" asp-controller="WebAppiUsers" asp-action="Index">
-                                    <i class="bi bi-skip-start-btn-fill"></i>
-                                    ApiKey in StartUp
-                                </a>
-                            </li>
-                            <li>
-                                <a class="button-69 active" asp-area="" asp-controller="WebAppiNba" asp-action="Index">
-                                    <i class="bi bi-basket3"></i>
-                                    WebAppiNBA without Authorize
-                                </a>
-                            </li>
-                            <li>
-                                <a class="button-69" asp-area="" asp-controller="WebAppiNba" asp-action="GetAllUsersWithAuthenticate">
-                                    <i class="bi bi-basket3"></i>
-                                    WebAppiNBA (BasicAuthorize)
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <hr />             
+                    <partial name="_MainMenu" />
                 </ul>
-
-
-
                 </nav>
-
             </div>
-
             <div class="col-10 border-top">
                 @RenderBody()
             </div>
-
         </div>
 
     <footer class="border-top footer text-muted">
@@ -113,7 +40,6 @@
             &copy; 2022 - ShotApi.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

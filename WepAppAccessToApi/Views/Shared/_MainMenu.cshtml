@@ -1,0 +1,50 @@
+﻿<div class="btn-group" role="group">
+    <button type="button" class="button-85" data-bs-toggle="dropdown" aria-expanded="false">
+        Main Menu
+    </button>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="button-69" asp-area="" asp-controller="Home" asp-action="Index">
+                <i class="bi bi-house "></i>
+                Home
+            </a>
+        </li>
+
+        <li>
+            <a class="button-69" asp-area="" asp-controller="UserApiKey" asp-action="Index">
+                <i class="bi bi-key"></i>
+                With ApiKey
+            </a>
+        </li>
+        <li>
+            <a class="button-69" asp-area="" asp-controller="UserBearer" asp-action="GetAllByToken">
+                <i class="bi bi-envelope-fill"></i>
+                With token (Bearer)
+            </a>
+        </li>
+        <li>
+            <a class="button-69" asp-area="" asp-controller="UserBearer" asp-action="GetRolles">
+                <i class="bi bi-universal-access-circle"></i>
+                Get Roles without authorize (Bearer)
+            </a>
+        </li>
+        <li>
+            <a class="button-69" asp-area="" asp-controller="WebAppiUsers" asp-action="Index">
+                <i class="bi bi-skip-start-btn-fill"></i>
+                ApiKey in StartUp
+            </a>
+        </li>
+        <li>
+            <a class="button-69 active" asp-area="" asp-controller="WebAppiNba" asp-action="Index">
+                <i class="bi bi-basket3"></i>
+                WebAppiNBA without Authorize
+            </a>
+        </li>
+        <li>
+            <a class="button-69" asp-area="" asp-controller="WebAppiNba" asp-action="GetAllUsersWithAuthenticate">
+                <i class="bi bi-basket3"></i>
+                WebAppiNBA (BasicAuthorize)
+            </a>
+        </li>
+    </ul>
+</div>
