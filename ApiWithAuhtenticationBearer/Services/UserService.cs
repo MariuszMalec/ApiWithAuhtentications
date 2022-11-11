@@ -70,9 +70,26 @@ namespace ApiWithAuhtenticationBearer.Services
             {
                 var newUser = new User()//TODO to zmienic za kazdym getem tworzy usera!!
                 {
-                    Email = "admin@example.com",
+                    Email = "mariusz@example.com",
                     FirstName = "Mariusz",
                     LastName = "Malec",
+                    DateOfBirth = new DateTime(2014, 5, 1),
+                    Nationality = "polish",
+                    RoleId = 3,
+                    Role = new Role { Id = 3, Name = EnumRole.admin.ToString() }
+                };
+                var hashedPassword = _passwordHasher.HashPassword(newUser, "admin");
+                newUser.PasswordHash = hashedPassword;
+                Create(newUser);
+            }
+            user = Users.Any(u => u.Id == 4);
+            if (!user)
+            {
+                var newUser = new User()//TODO to zmienic za kazdym getem tworzy usera!!
+                {
+                    Email = "admin@example.com",
+                    FirstName = "Admin",
+                    LastName = "Adminek",
                     DateOfBirth = new DateTime(2014, 5, 1),
                     Nationality = "polish",
                     RoleId = 3,
