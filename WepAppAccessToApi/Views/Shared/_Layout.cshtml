@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/layout.css" />
     <link rel="stylesheet" href="~/css/stylesButtonMenu.css" />
+    <link rel="stylesheet" href="~/css/rozsuwanemenu.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -16,19 +17,35 @@
 
 <body class="mybody-bg-image">
         <div class="row">
-        <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 300px;">
-            <nav class="hb-navbar hb-navbar-top navbar sticky-top navbar-expand-sm navbar-toggleable-sm box-shadow">
+        <div class="d-flex flex-column flex-shrink-0 p-3">
+
+            <nav class="site-nav">
+                <button class="side-menu-trigger button-85">Menu</button>
+                <aside class="side-menu">
+                    <partial name="_MainMenu" />
+              </aside>
+              </nav>
+
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <img src="~/icons8-api-100.png" class="d-inline-block align-middle rounded" />
+                </a>
+
+
+@*            <nav class="hb-navbar hb-navbar-top navbar sticky-top navbar-expand-sm navbar-toggleable-sm box-shadow">
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li>
                         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                             <img src="~/icons8-api-100.png" class="d-inline-block align-middle rounded" />                       
                         </a>
+
+                        <partial name="_LoginPartial" />
+                        <hr />
+                        <partial name="_MainMenu" />
+
                     </li>
-                    <partial name="_LoginPartial" />
-                    <hr />             
-                    <partial name="_MainMenu" />
+
                 </ul>
-                </nav>
+                </nav>*@
             </div>
             <div class="col-10 border-top">
                 @RenderBody()
