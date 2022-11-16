@@ -31,4 +31,5 @@
 1. prawy przycisk na solucji "Set Startup Projects"
 2. wybieramy Api i MVC project
 3. Sciagamy Api WebAppiUsers. Zewnetrzny projekt
-4. Start
+4. Sciagamy Api WebAppiNbaPlayers. Zewnetrzny projekt
+5. Start
