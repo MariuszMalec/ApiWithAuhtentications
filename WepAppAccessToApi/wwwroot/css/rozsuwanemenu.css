@@ -1,8 +1,5 @@
 ﻿body {
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    background: #696e9e;
+
 }
 
 .site-nav {
@@ -72,6 +69,6 @@
         transform: translateX(-300px) translateY(100px);
         position: fixed;
         z-index: 1;
-        opacity: 0.4;
+        opacity: 0.9;
     }
   }
