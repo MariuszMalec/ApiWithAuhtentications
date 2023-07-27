@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using WepAppAccessToApi.Models;
 using WepAppAccessToApi.Services;
 
 namespace WepAppAccessToApi.Controllers
@@ -26,19 +28,31 @@ namespace WepAppAccessToApi.Controllers
             return View(model);
         }
 
-        // GET: WebAppiUsersController/Create
+        // GET: TrainerController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: WebAppiUsersController/Create
+        // POST: UserControlle/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(User model)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                var check = await _userService.Insert(model);
+
+                if (check == false)
+                {
+                    return BadRequest("User was not created!");
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -47,19 +61,35 @@ namespace WepAppAccessToApi.Controllers
             }
         }
 
-        // GET: WebAppiUsersController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: UserController/Edit/5
+        public async Task<ActionResult<User>> Edit(int id)
         {
-            return View();
+            var model = await _userService.GetUserById(id);
+            if (model == null)
+            {
+                return RedirectToAction("EmptyList");
+            }
+            return View(model);
         }
 
-        // POST: WebAppiUsersController/Edit/5
+        // POST: UserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, User model)
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+                var check = await _userService.Edit(id, model);
+
+                if (check == false)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -69,19 +99,33 @@ namespace WepAppAccessToApi.Controllers
         }
 
         // GET: WebAppiUsersController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: UserController/Delete/5
+        [Authorize]
+        public async Task<ActionResult<User>> Delete(int id)
         {
-            return View();
+            var model = await _userService.GetUserById(id);
+            if (model == null)
+            {
+                return RedirectToAction("EmptyList");
+            }
+            return View(model);
         }
 
-        // POST: WebAppiUsersController/Delete/5
+        // POST: UserController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int id, User model)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var check = await _userService.Delete(id, model);
+
+                if (check == false)
+                {
+                    return RedirectToAction("EmptyList");
+                }
+
+                return RedirectToAction("Index");
             }
             catch
             {
