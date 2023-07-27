@@ -40,6 +40,27 @@ namespace WepAppAccessToApi.Controllers
             return View(model);
         }
 
+        public async Task<ActionResult> TestAjax()
+        {
+            var client = httpClientFactory.CreateClient();
+
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/Users");
+
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            var result = await client.SendAsync(request);
+
+            if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return Content("Unauthorized!");
+            }
+
+            var content = await result.Content.ReadAsStringAsync();
+
+            var model = JsonConvert.DeserializeObject<List<UserFromNbaApii>>(content);
+            return Ok(content);
+        }
+
 
         public ActionResult GetAllUsersWithAuthenticate()
         {
