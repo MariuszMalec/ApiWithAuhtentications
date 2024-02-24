@@ -5,15 +5,15 @@
 @inject UserManager<WepAppAccessToApiUser> UserManager
 
 
-<div class="justify-content-end">
+<div class="justify-content">
     <ul class="navbar-nav flex-grow-1">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+        <li class="nav-item" style="margin-left: 100px;">
+            <a style="font-family: Calibri; font-style: italic;" id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item" style="margin-left: 100px;">
             <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                     <button class="button-92" id="logout" type="submit"><i class="bi bi-box-arrow-right"></i>Logout</button>
             </form>
